@@ -1,25 +1,25 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "com.example",
-		"id": "example_mod",
+		"group": "xyz.pupbrained",
+		"id": "drop_confirm",
 		"version": "${version}",
 		"metadata": {
-			"name": "Mod Name",
-			"description": "A short description of your mod.",
+			"name": "DropConfirm",
+			"description": "A simple mod to confirm item drops in dangerous situations.",
 			"contributors": {
-				"Your name here": "Owner"
+				"Mars": "Owner"
 			},
 			"contact": {
-				"homepage": "https://example.com/",
-				"issues": "https://github.com/QuiltMC/quilt-template-mod/issues",
-				"sources": "https://github.com/QuiltMC/quilt-template-mod"
+				"homepage": "https://pupbrained.xyz/",
+				"issues": "https://github.com/pupbrained/drop-confirm/issues",
+				"sources": "https://github.com/pupbrained/drop-confirm"
 			},
-			"icon": "assets/example_mod/icon.png"
+			"icon": "assets/drop_confirm/icon.png"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "com.example.example_mod.ExampleMod"
+			"init": "xyz.pupbrained.drop_confirm.DropConfirm"
 		},
 		"depends": [
 			{
@@ -36,5 +36,5 @@
 			}
 		]
 	},
-	"mixin": "example_mod.mixins.json"
+	"mixin": "drop_confirm.mixins.json"
 }

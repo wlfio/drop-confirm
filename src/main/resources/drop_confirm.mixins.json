@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.pupbrained.drop_confirm.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [],
+  "client": [
+    "ItemDropMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
