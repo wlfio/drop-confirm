@@ -1,40 +1,41 @@
 {
-	"schema_version": 1,
-	"quilt_loader": {
-		"group": "xyz.pupbrained",
-		"id": "drop_confirm",
-		"version": "${version}",
-		"metadata": {
-			"name": "DropConfirm",
-			"description": "A simple mod to confirm item drops in dangerous situations.",
-			"contributors": {
-				"Mars": "Owner"
-			},
-			"contact": {
-				"homepage": "https://pupbrained.xyz/",
-				"issues": "https://github.com/pupbrained/drop-confirm/issues",
-				"sources": "https://github.com/pupbrained/drop-confirm"
-			},
-			"icon": "assets/drop_confirm/icon.png"
-		},
-		"intermediate_mappings": "net.fabricmc:intermediary",
-		"entrypoints": {
-			"init": "xyz.pupbrained.drop_confirm.DropConfirm"
-		},
-		"depends": [
-			{
-				"id": "quilt_loader",
-				"versions": ">=0.19.1"
-			},
-			{
-				"id": "quilted_fabric_api",
-				"versions": ">=7.0.2"
-			},
-			{
-				"id": "minecraft",
-				"versions": ">=1.20"
-			}
-		]
-	},
-	"mixin": "drop_confirm.mixins.json"
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "xyz.pupbrained",
+    "id": "drop_confirm",
+    "version": "${version}",
+    "metadata": {
+      "name": "DropConfirm",
+      "description": "Think twice before you drop.",
+      "contributors": {
+        "Mars (pupbrained)": "Owner"
+      },
+      "contact": {
+        "homepage": "https://pupbrained.xyz/",
+        "issues": "https://github.com/pupbrained/drop-confirm/issues",
+        "sources": "https://github.com/pupbrained/drop-confirm"
+      },
+      "icon": "assets/drop_confirm/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "xyz.pupbrained.drop_confirm.DropConfirm",
+      "modmenu": "xyz.pupbrained.drop_confirm.ModMenuIntegration"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.19.1"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=7.0.2"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.20"
+      }
+    ]
+  },
+  "mixin": "drop_confirm.mixins.json"
 }
