@@ -14,5 +14,7 @@ public class DropConfirm implements ModInitializer {
   @Override
   public void onInitialize(ModContainer mod) {
     AutoConfig.register(DropConfirmConfig.class, JanksonConfigSerializer::new);
+
+    LOGGER.info("DropConfirm initialized");
   }
 }

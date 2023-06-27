@@ -1,5 +1,6 @@
 package xyz.pupbrained.drop_confirm.mixin;
 
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import xyz.pupbrained.drop_confirm.DropConfirm;
+import xyz.pupbrained.drop_confirm.DropConfirmConfig;
 
 @Mixin(MinecraftClient.class)
 public abstract class HotbarSwitchMixin {
@@ -24,6 +26,9 @@ public abstract class HotbarSwitchMixin {
     locals = LocalCapture.CAPTURE_FAILHARD
   )
   public void onHotbarSwitch(CallbackInfo ci, int i) {
+    if (!AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled)
+      return;
+
     if (i != lastSlot) DropConfirm.confirmed = false;
     lastSlot = i;
   }

@@ -24,6 +24,9 @@ import static java.lang.Thread.sleep;
 public abstract class ItemDropMixin {
   @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
   public void onItemDrop(boolean entireStack, CallbackInfoReturnable<Boolean> ci) {
+    if (!AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled)
+      return;
+
     var config = AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig();
     var mc = MinecraftClient.getInstance();
     var action = entireStack
