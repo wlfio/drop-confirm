@@ -45,14 +45,12 @@ java {
   withSourcesJar()
 }
 
-// If you plan to use a different file for the license, don't forget to change the file name here!
 jar {
-  from('LICENSE') {
+  from('UNLICENSE') {
     rename { "${it}_${base.archivesName.get()}" }
   }
 }
 
-// Configure the maven publication
 publishing {
   publications {
     mavenJava(MavenPublication) {
@@ -60,7 +58,6 @@ publishing {
     }
   }
 
-  // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
   repositories {
     // Add repositories to publish to here.
     // Notice: This block does NOT have the same function as the block in the top level.
