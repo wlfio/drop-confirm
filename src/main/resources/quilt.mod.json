@@ -3,7 +3,7 @@
   "quilt_loader": {
     "group": "xyz.pupbrained",
     "id": "drop_confirm",
-    "version": "1.2.0",
+    "version": "${version}",
     "metadata": {
       "name": "DropConfirm",
       "description": "Think twice before you drop.",
