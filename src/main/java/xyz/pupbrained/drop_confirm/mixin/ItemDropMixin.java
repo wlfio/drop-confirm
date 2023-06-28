@@ -17,32 +17,37 @@ import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 import java.util.Objects;
 
-import static java.lang.String.format;
-import static java.lang.Thread.sleep;
-
 @Mixin(ClientPlayerEntity.class)
 public abstract class ItemDropMixin {
+  private boolean isDropConfirmDisabled() {
+    return !AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled;
+  }
+
+  private boolean isMainHandStackEmpty() {
+    var player = Objects.requireNonNull(MinecraftClient.getInstance().player);
+    return player.getInventory().getMainHandStack().isEmpty();
+  }
+
   @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
-  public void onItemDrop(boolean entireStack, CallbackInfoReturnable<Boolean> ci) {
-    if (!AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled)
+  public void onItemDrop(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
+    // If the mod is disabled or there's nothing
+    // in the current slot, don't do anything.
+    if (isDropConfirmDisabled() || isMainHandStackEmpty())
       return;
 
-    var config = AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig();
-    var mc = MinecraftClient.getInstance();
-    var action = entireStack
+    final var config = AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig();
+    final var mc = MinecraftClient.getInstance();
+    final var player = Objects.requireNonNull(mc.player);
+    final var action = entireStack
       ? PlayerActionC2SPacket.Action.DROP_ALL_ITEMS
       : PlayerActionC2SPacket.Action.DROP_ITEM;
-    var itemStack = Objects.requireNonNull(mc.player).getInventory().getMainHandStack();
-
-    if (itemStack.isEmpty()) {
-      ci.setReturnValue(false);
-      return;
-    }
+    final var inventory = player.getInventory();
+    var itemStack = inventory.getMainHandStack();
 
     if (!DropConfirm.confirmed) {
       mc.inGameHud.setOverlayMessage(
         Text.of(
-          format("Press %s again to drop this item.",
+          String.format("Press %s again to drop this item.",
             mc
               .options
               .dropKey
@@ -53,19 +58,27 @@ public abstract class ItemDropMixin {
       DropConfirm.confirmed = true;
       new Thread(() -> {
         try {
-          sleep(config.confirmationResetDelay);
-          DropConfirm.confirmed = false;
+          Thread.sleep(config.confirmationResetDelay);
+          synchronized (DropConfirm.class) {
+            DropConfirm.confirmed = false;
+          }
         } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
           DropConfirm.LOGGER.error("Interrupted while waiting to reset confirmation.", e);
         }
       }).start();
     } else {
-      mc.inGameHud.setOverlayMessage(Text.empty(), false);
       DropConfirm.confirmed = false;
-      itemStack = mc.player.getInventory().dropSelectedItem(entireStack);
-      mc.player.playSound(SoundEvents.ITEM_BUNDLE_DROP_CONTENTS, 1.0F, 1.0F);
-      mc.player.networkHandler.sendPacket(new PlayerActionC2SPacket(action, BlockPos.ORIGIN, Direction.DOWN));
+      itemStack = inventory.dropSelectedItem(entireStack);
+
+      mc.inGameHud.setOverlayMessage(Text.empty(), false);
+
+      if (config.playSound)
+        player.playSound(SoundEvents.ITEM_BUNDLE_DROP_CONTENTS, 1.0F, 1.0F);
+
+      player.networkHandler.sendPacket(new PlayerActionC2SPacket(action, BlockPos.ORIGIN, Direction.DOWN));
     }
-    ci.setReturnValue(!itemStack.isEmpty());
+
+    cir.setReturnValue(!itemStack.isEmpty());
   }
 }

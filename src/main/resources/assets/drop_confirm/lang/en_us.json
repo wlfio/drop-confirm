@@ -1,6 +1,7 @@
 {
   "text.autoconfig.drop_confirm.option.enabled": "Enable DropConfirm",
-  "text.autoconfig.drop_confirm.option.confirmationResetDelay": "Reset delay",
+  "text.autoconfig.drop_confirm.option.playSound": "Play Drop Sound",
+  "text.autoconfig.drop_confirm.option.confirmationResetDelay": "Reset Delay",
   "category.drop_confirm.keybinds": "DropConfirm",
   "key.drop_confirm.toggle": "Toggle DropConfirm"
 }

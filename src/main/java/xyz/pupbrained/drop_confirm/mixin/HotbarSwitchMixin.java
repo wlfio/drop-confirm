@@ -29,7 +29,9 @@ public abstract class HotbarSwitchMixin {
     if (!AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled)
       return;
 
-    if (i != lastSlot) DropConfirm.confirmed = false;
-    lastSlot = i;
+    if (i != lastSlot) {
+      DropConfirm.confirmed = false;
+      lastSlot = i;
+    }
   }
 }
