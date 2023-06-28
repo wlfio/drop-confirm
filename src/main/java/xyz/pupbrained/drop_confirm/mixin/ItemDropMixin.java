@@ -1,6 +1,5 @@
 package xyz.pupbrained.drop_confirm.mixin;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
@@ -20,7 +19,7 @@ import java.util.Objects;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ItemDropMixin {
   private boolean isDropConfirmDisabled() {
-    return !AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled;
+    return !DropConfirmConfig.INSTANCE.getConfig().enabled;
   }
 
   private boolean isMainHandStackEmpty() {
@@ -35,7 +34,7 @@ public abstract class ItemDropMixin {
     if (isDropConfirmDisabled() || isMainHandStackEmpty())
       return;
 
-    final var config = AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig();
+    final var config = DropConfirmConfig.INSTANCE.getConfig();
     final var mc = MinecraftClient.getInstance();
     final var player = Objects.requireNonNull(mc.player);
     final var action = entireStack
@@ -58,7 +57,7 @@ public abstract class ItemDropMixin {
       DropConfirm.confirmed = true;
       new Thread(() -> {
         try {
-          Thread.sleep(config.confirmationResetDelay);
+          Thread.sleep((long) (config.confirmationResetDelay * 1000));
           synchronized (DropConfirm.class) {
             DropConfirm.confirmed = false;
           }

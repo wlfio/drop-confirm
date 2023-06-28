@@ -1,12 +1,9 @@
 package xyz.pupbrained.drop_confirm;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 public class DropConfirm implements ModInitializer {
   public static final Logger LOGGER = LoggerFactory.getLogger("DropConfirm");
@@ -14,8 +11,6 @@ public class DropConfirm implements ModInitializer {
 
   @Override
   public void onInitialize(ModContainer mod) {
-    AutoConfig.register(DropConfirmConfig.class, JanksonConfigSerializer::new);
-
     LOGGER.info("DropConfirm initialized");
   }
 }

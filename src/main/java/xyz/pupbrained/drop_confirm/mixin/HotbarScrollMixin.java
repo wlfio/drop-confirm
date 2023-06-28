@@ -1,6 +1,5 @@
 package xyz.pupbrained.drop_confirm.mixin;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +19,7 @@ public abstract class HotbarScrollMixin {
     )
   )
   private void onHotbarScroll(CallbackInfo ci) {
-    if (!AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig().enabled)
+    if (!DropConfirmConfig.INSTANCE.getConfig().enabled)
       return;
 
     DropConfirm.confirmed = false;

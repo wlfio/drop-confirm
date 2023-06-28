@@ -1,6 +1,5 @@
 package xyz.pupbrained.drop_confirm;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBind;
@@ -13,11 +12,11 @@ import org.quiltmc.qsl.lifecycle.api.client.event.ClientTickEvents;
 import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 public class DropConfirmClient implements ClientModInitializer {
-  public static KeyBind toggleKey;
-
   @Override
   public void onInitializeClient(ModContainer mod) {
-    toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBind(
+    DropConfirmConfig.INSTANCE.load();
+
+    var toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBind(
       "key.drop_confirm.toggle",
       GLFW.GLFW_KEY_UNKNOWN,
       "category.drop_confirm.keybinds"
@@ -25,9 +24,9 @@ public class DropConfirmClient implements ClientModInitializer {
 
     ClientTickEvents.END.register(client -> {
       while (toggleKey.wasPressed()) {
-        DropConfirmConfig config = AutoConfig.getConfigHolder(DropConfirmConfig.class).getConfig();
+        var config = DropConfirmConfig.INSTANCE.getConfig();
         config.enabled = !config.enabled;
-        AutoConfig.getConfigHolder(DropConfirmConfig.class).save();
+        DropConfirmConfig.INSTANCE.save();
         MinecraftClient.getInstance().inGameHud.setOverlayMessage(
           Text
             .literal("DropConfirm: ")
