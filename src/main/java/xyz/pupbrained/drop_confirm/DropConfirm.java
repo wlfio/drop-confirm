@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 public final class DropConfirm implements ModInitializer {
   public static final Logger LOGGER = LoggerFactory.getLogger("DropConfirm");
-  public static boolean confirmed = false;
 
   @Override
   public void onInitialize(ModContainer mod) {

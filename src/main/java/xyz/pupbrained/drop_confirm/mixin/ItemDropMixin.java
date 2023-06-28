@@ -12,38 +12,29 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.pupbrained.drop_confirm.DropConfirm;
+import xyz.pupbrained.drop_confirm.Util;
 import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 import java.util.Objects;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ItemDropMixin {
-  private boolean isDropConfirmDisabled() {
-    return !DropConfirmConfig.INSTANCE.getConfig().enabled;
-  }
-
-  private boolean isMainHandStackEmpty() {
-    var player = Objects.requireNonNull(MinecraftClient.getInstance().player);
-    return player.getInventory().getMainHandStack().isEmpty();
-  }
-
   @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
-  public void onItemDrop(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
-    // If the mod is disabled or there's nothing
-    // in the current slot, don't do anything.
-    if (isDropConfirmDisabled() || isMainHandStackEmpty())
+  private void onItemDrop(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
+    final var mc = MinecraftClient.getInstance();
+    final var config = DropConfirmConfig.INSTANCE.getConfig();
+    final var player = Objects.requireNonNull(mc.player);
+
+    if (Util.isDropConfirmDisabled(config) || Util.isMainHandStackEmpty(player))
       return;
 
-    final var config = DropConfirmConfig.INSTANCE.getConfig();
-    final var mc = MinecraftClient.getInstance();
-    final var player = Objects.requireNonNull(mc.player);
     final var action = entireStack
       ? PlayerActionC2SPacket.Action.DROP_ALL_ITEMS
       : PlayerActionC2SPacket.Action.DROP_ITEM;
     final var inventory = player.getInventory();
     var itemStack = inventory.getMainHandStack();
 
-    if (!DropConfirm.confirmed) {
+    if (!Util.confirmed) {
       mc.inGameHud.setOverlayMessage(
         Text.of(
           String.format("Press %s again to drop this item.",
@@ -54,12 +45,12 @@ public abstract class ItemDropMixin {
               .getString()
           )
         ), false);
-      DropConfirm.confirmed = true;
+      Util.confirmed = true;
       new Thread(() -> {
         try {
           Thread.sleep((long) (config.confirmationResetDelay * 1000));
           synchronized (DropConfirm.class) {
-            DropConfirm.confirmed = false;
+            Util.confirmed = false;
           }
         } catch (InterruptedException e) {
           Thread.currentThread().interrupt();
@@ -67,7 +58,7 @@ public abstract class ItemDropMixin {
         }
       }).start();
     } else {
-      DropConfirm.confirmed = false;
+      Util.confirmed = false;
       itemStack = inventory.dropSelectedItem(entireStack);
 
       mc.inGameHud.setOverlayMessage(Text.empty(), false);

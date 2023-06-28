@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import xyz.pupbrained.drop_confirm.DropConfirm;
+import xyz.pupbrained.drop_confirm.Util;
 import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 @Mixin(Mouse.class)
@@ -22,6 +22,6 @@ public abstract class HotbarScrollMixin {
     if (!DropConfirmConfig.INSTANCE.getConfig().enabled)
       return;
 
-    DropConfirm.confirmed = false;
+    Util.confirmed = false;
   }
 }

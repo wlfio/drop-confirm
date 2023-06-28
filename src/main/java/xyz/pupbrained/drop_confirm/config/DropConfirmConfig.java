@@ -9,6 +9,7 @@ import dev.isxander.yacl3.gui.controllers.slider.DoubleSliderController;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.quiltmc.loader.api.QuiltLoader;
+import xyz.pupbrained.drop_confirm.Util;
 
 import java.util.List;
 import java.util.function.Function;
@@ -36,7 +37,7 @@ public final class DropConfirmConfig {
         "option.drop_confirm.enabled",
         "option.drop_confirm.enabled.description",
         defaults.enabled,
-        new Mutable<>(config.enabled),
+        new Util.Mutable<>(config.enabled),
         booleanOption -> new BooleanController(booleanOption, true)
       );
 
@@ -44,7 +45,7 @@ public final class DropConfirmConfig {
         "option.drop_confirm.play_sounds",
         "option.drop_confirm.play_sounds.description",
         defaults.playSounds,
-        new Mutable<>(config.playSounds),
+        new Util.Mutable<>(config.playSounds),
         booleanOption -> new BooleanController(booleanOption, true)
       );
 
@@ -52,7 +53,7 @@ public final class DropConfirmConfig {
         "option.drop_confirm.confirmation_reset_delay",
         "option.drop_confirm.confirmation_reset_delay.description",
         defaults.confirmationResetDelay,
-        new Mutable<>(config.confirmationResetDelay),
+        new Util.Mutable<>(config.confirmationResetDelay),
         doubleOption -> new DoubleSliderController(doubleOption, 0.0, 10.0, 0.1)
       );
 
@@ -70,28 +71,19 @@ public final class DropConfirmConfig {
     String optionName,
     String optionDescription,
     T defaultValue,
-    Mutable<T> configValue,
+    Util.Mutable<T> configValue,
     Function<Option<T>, Controller<T>> controllerProvider
   ) {
     return Option.<T>createBuilder()
       .name(Text.translatable(optionName))
-      .description(buildOptionDescription(optionDescription))
-      .binding(defaultValue, () -> configValue.value, val -> configValue.value = val)
+      .description(
+        OptionDescription.createBuilder()
+          .text(Text.translatable(optionDescription))
+          .build()
+      )
+      .binding(defaultValue, configValue::getValue, configValue::setValue)
       .customController(controllerProvider)
       .build();
   }
 
-  private static OptionDescription buildOptionDescription(String textKey) {
-    return OptionDescription.createBuilder()
-      .text(Text.translatable(textKey))
-      .build();
-  }
-
-  private static final class Mutable<T> {
-    T value;
-
-    Mutable(T value) {
-      this.value = value;
-    }
-  }
 }
