@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center">
   <img style="border-radius: 10px" src="./src/main/resources/assets/drop_confirm/icon.png" alt="The DropConfirm Logo"/>
   <h1 style="margin-top: 0">DropConfirm</h1>
   <h3 style="margin-top: 0">Think twice before you drop.</h3>
