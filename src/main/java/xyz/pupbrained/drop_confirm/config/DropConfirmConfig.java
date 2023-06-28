@@ -11,19 +11,9 @@ import net.minecraft.text.Text;
 import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class DropConfirmConfig {
-  private static final class Mutable<T> {
-    T value;
-
-    Mutable(T value) {
-      this.value = value;
-    }
-  }
-
   public static final ConfigInstance<DropConfirmConfig> INSTANCE =
     GsonConfigInstance
       .createBuilder(DropConfirmConfig.class)
@@ -32,10 +22,8 @@ public final class DropConfirmConfig {
 
   @ConfigEntry
   public boolean enabled = true;
-
   @ConfigEntry
-  public boolean playSound = true;
-
+  public boolean playSounds = true;
   @ConfigEntry
   public double confirmationResetDelay = 1.0;
 
@@ -53,10 +41,10 @@ public final class DropConfirmConfig {
       );
 
       var playSound = createOption(
-        "option.drop_confirm.play_sound",
-        "option.drop_confirm.play_sound.description",
-        defaults.playSound,
-        new Mutable<>(config.playSound),
+        "option.drop_confirm.play_sounds",
+        "option.drop_confirm.play_sounds.description",
+        defaults.playSounds,
+        new Mutable<>(config.playSounds),
         booleanOption -> new BooleanController(booleanOption, true)
       );
 
@@ -64,8 +52,7 @@ public final class DropConfirmConfig {
         "option.drop_confirm.confirmation_reset_delay",
         "option.drop_confirm.confirmation_reset_delay.description",
         defaults.confirmationResetDelay,
-        () -> config.confirmationResetDelay,
-        val -> config.confirmationResetDelay = val,
+        new Mutable<>(config.confirmationResetDelay),
         doubleOption -> new DoubleSliderController(doubleOption, 0.0, 10.0, 0.1)
       );
 
@@ -94,25 +81,17 @@ public final class DropConfirmConfig {
       .build();
   }
 
-  private static <T> Option<T> createOption(
-    String optionName,
-    String optionDescription,
-    T defaultValue,
-    Supplier<T> getter,
-    Consumer<T> setter,
-    Function<Option<T>, Controller<T>> controllerProvider
-  ) {
-    return Option.<T>createBuilder()
-      .name(Text.translatable(optionName))
-      .description(buildOptionDescription(optionDescription))
-      .binding(defaultValue, getter, setter)
-      .customController(controllerProvider)
-      .build();
-  }
-
   private static OptionDescription buildOptionDescription(String textKey) {
     return OptionDescription.createBuilder()
       .text(Text.translatable(textKey))
       .build();
+  }
+
+  private static final class Mutable<T> {
+    T value;
+
+    Mutable(T value) {
+      this.value = value;
+    }
   }
 }

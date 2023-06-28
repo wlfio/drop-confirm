@@ -72,7 +72,7 @@ public abstract class ItemDropMixin {
 
       mc.inGameHud.setOverlayMessage(Text.empty(), false);
 
-      if (config.playSound)
+      if (config.playSounds)
         player.playSound(SoundEvents.ITEM_BUNDLE_DROP_CONTENTS, 1.0F, 1.0F);
 
       player.networkHandler.sendPacket(new PlayerActionC2SPacket(action, BlockPos.ORIGIN, Direction.DOWN));
