@@ -11,7 +11,7 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.lifecycle.api.client.event.ClientTickEvents;
 import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
-public class DropConfirmClient implements ClientModInitializer {
+public final class DropConfirmClient implements ClientModInitializer {
   @Override
   public void onInitializeClient(ModContainer mod) {
     DropConfirmConfig.INSTANCE.load();

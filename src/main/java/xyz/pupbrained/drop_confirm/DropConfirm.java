@@ -5,7 +5,7 @@ import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DropConfirm implements ModInitializer {
+public final class DropConfirm implements ModInitializer {
   public static final Logger LOGGER = LoggerFactory.getLogger("DropConfirm");
   public static boolean confirmed = false;
 
