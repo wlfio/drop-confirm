@@ -21,7 +21,7 @@
     "entrypoints": {
       "init": "xyz.pupbrained.drop_confirm.DropConfirm",
       "client_init": "xyz.pupbrained.drop_confirm.DropConfirmClient",
-      "modmenu": "xyz.pupbrained.drop_confirm.ModMenuIntegration"
+      "modmenu": "xyz.pupbrained.drop_confirm.config.ModMenuIntegration"
     },
     "depends": [
       {

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.pupbrained.drop_confirm.DropConfirm;
-import xyz.pupbrained.drop_confirm.DropConfirmConfig;
+import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 import java.util.Objects;
 

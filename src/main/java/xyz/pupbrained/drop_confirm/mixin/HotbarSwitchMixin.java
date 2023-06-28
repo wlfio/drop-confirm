@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import xyz.pupbrained.drop_confirm.DropConfirm;
-import xyz.pupbrained.drop_confirm.DropConfirmConfig;
+import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 @Mixin(MinecraftClient.class)
 public abstract class HotbarSwitchMixin {

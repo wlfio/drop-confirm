@@ -10,6 +10,7 @@ import org.lwjgl.glfw.GLFW;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.lifecycle.api.client.event.ClientTickEvents;
+import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
 
 public class DropConfirmClient implements ClientModInitializer {
   public static KeyBind toggleKey;

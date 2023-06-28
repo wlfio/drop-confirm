@@ -1,4 +1,4 @@
-package xyz.pupbrained.drop_confirm;
+package xyz.pupbrained.drop_confirm.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
