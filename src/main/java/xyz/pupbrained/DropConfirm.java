@@ -18,8 +18,8 @@ import java.util.Objects;
 public class DropConfirm implements ClientModInitializer {
   public static final Logger LOGGER = LogManager.getLogger("DropConfirm");
 
-	@Override
-	public void onInitializeClient() {
+  @Override
+  public void onInitializeClient() {
     DropConfirmConfig.INSTANCE.load();
 
     var toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -46,12 +46,12 @@ public class DropConfirm implements ClientModInitializer {
             .literal("DropConfirm: ")
             .append(
               Text
-                .literal(config.enabled ? "ON" : "OFF")
+                .translatable(config.enabled ? "drop_confirm.toggle.on" : "drop_confirm.toggle.off")
                 .formatted(config.enabled ? Formatting.GREEN : Formatting.RED)
             ),
           false
         );
       }
     });
-	}
+  }
 }
