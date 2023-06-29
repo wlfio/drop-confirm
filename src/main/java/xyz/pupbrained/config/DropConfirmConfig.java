@@ -71,7 +71,7 @@ public final class DropConfirmConfig {
     })).generateScreen(parent);
   }
 
-  public static <T> Option<T> createOption(
+  private static <T> Option<T> createOption(
     String name,
     String description,
     T defaultValue,
