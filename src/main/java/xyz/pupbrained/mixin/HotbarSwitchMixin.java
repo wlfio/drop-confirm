@@ -1,4 +1,4 @@
-package xyz.pupbrained.drop_confirm.mixin;
+package xyz.pupbrained.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import org.objectweb.asm.Opcodes;
@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import xyz.pupbrained.drop_confirm.Util;
-import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
+import xyz.pupbrained.Util;
+import xyz.pupbrained.config.DropConfirmConfig;
 
 @Mixin(MinecraftClient.class)
 public abstract class HotbarSwitchMixin {

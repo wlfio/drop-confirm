@@ -1,12 +1,12 @@
-package xyz.pupbrained.drop_confirm.mixin;
+package xyz.pupbrained.mixin;
 
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import xyz.pupbrained.drop_confirm.Util;
-import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
+import xyz.pupbrained.Util;
+import xyz.pupbrained.config.DropConfirmConfig;
 
 @Mixin(Mouse.class)
 public abstract class HotbarScrollMixin {

@@ -1,4 +1,4 @@
-package xyz.pupbrained.drop_confirm.mixin;
+package xyz.pupbrained.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -11,11 +11,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import xyz.pupbrained.drop_confirm.DropConfirm;
-import xyz.pupbrained.drop_confirm.Util;
-import xyz.pupbrained.drop_confirm.config.DropConfirmConfig;
+import xyz.pupbrained.DropConfirm;
+import xyz.pupbrained.Util;
+import xyz.pupbrained.config.DropConfirmConfig;
 
 import java.util.Objects;
+
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ItemDropMixin {
@@ -25,7 +26,7 @@ public abstract class ItemDropMixin {
     final var config = DropConfirmConfig.INSTANCE.getConfig();
     final var player = Objects.requireNonNull(mc.player);
 
-    if (Util.isDropConfirmDisabled(config) || Util.isMainHandStackEmpty(player))
+    if (Util.isDisabled(config) || Util.isMainHandStackEmpty(player))
       return;
 
     final var action = entireStack
@@ -41,7 +42,7 @@ public abstract class ItemDropMixin {
             mc
               .options
               .dropKey
-              .getKeyName()
+              .getBoundKeyLocalizedText()
               .getString()
           )
         ), false);
@@ -49,7 +50,7 @@ public abstract class ItemDropMixin {
       new Thread(() -> {
         try {
           Thread.sleep((long) (config.confirmationResetDelay * 1000));
-          synchronized (DropConfirm.class) {
+          synchronized (Util.class) {
             Util.confirmed = false;
           }
         } catch (InterruptedException e) {

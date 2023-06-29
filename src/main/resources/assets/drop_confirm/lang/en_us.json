@@ -6,7 +6,7 @@
   "option.drop_confirm.play_sounds": "Play Sounds",
   "option.drop_confirm.play_sounds.description": "Whether DropConfirm should play sounds for various events.",
   "option.drop_confirm.confirmation_reset_delay": "Reset Delay",
-  "option.drop_confirm.confirmation_reset_delay.description": "The amount of time in seconds before the confirmation is reset.",
+  "option.drop_confirm.confirmation_reset_delay.description": "The amount of time in seconds before the confirmation status is reset.",
   "category.drop_confirm.keybinds": "DropConfirm",
   "key.drop_confirm.toggle": "Toggle DropConfirm"
 }

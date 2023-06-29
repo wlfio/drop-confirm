@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "drop_confirm",
+  "version": "${version}",
+  "name": "DropConfirm",
+  "description": "Think twice before you drop.",
+  "authors": [
+    "pupbrained"
+  ],
+  "contact": {
+    "homepage": "https://pupbrained.xyz/",
+    "issues": "https://github.com/pupbrained/drop-confirm/issues",
+    "sources": "https://github.com/pupbrained/drop-confirm"
+  },
+  "license": "Unlicense",
+  "icon": "assets/drop_confirm/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      {
+        "value": "xyz.pupbrained.DropConfirm"
+      }
+    ],
+    "modmenu": [
+      {
+        "value": "xyz.pupbrained.config.ModMenuIntegration"
+      }
+    ]
+  },
+  "mixins": [
+    {
+      "config": "drop_confirm.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}

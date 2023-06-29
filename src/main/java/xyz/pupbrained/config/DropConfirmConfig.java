@@ -1,4 +1,4 @@
-package xyz.pupbrained.drop_confirm.config;
+package xyz.pupbrained.config;
 
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.config.ConfigEntry;
@@ -6,19 +6,20 @@ import dev.isxander.yacl3.config.ConfigInstance;
 import dev.isxander.yacl3.config.GsonConfigInstance;
 import dev.isxander.yacl3.gui.controllers.BooleanController;
 import dev.isxander.yacl3.gui.controllers.slider.DoubleSliderController;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
-import org.quiltmc.loader.api.QuiltLoader;
-import xyz.pupbrained.drop_confirm.Util;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class DropConfirmConfig {
   public static final ConfigInstance<DropConfirmConfig> INSTANCE =
     GsonConfigInstance
       .createBuilder(DropConfirmConfig.class)
-      .setPath(QuiltLoader.getConfigDir().resolve("drop_confirm.json"))
+      .setPath(FabricLoader.getInstance().getConfigDir().resolve("drop_confirm.json"))
       .build();
 
   @ConfigEntry
@@ -37,15 +38,17 @@ public final class DropConfirmConfig {
         "option.drop_confirm.enabled",
         "option.drop_confirm.enabled.description",
         defaults.enabled,
-        new Util.Mutable<>(config.enabled),
+        () -> config.enabled,
+        val -> config.enabled = val,
         booleanOption -> new BooleanController(booleanOption, true)
       );
 
-      var playSound = createOption(
+      var playSounds = createOption(
         "option.drop_confirm.play_sounds",
         "option.drop_confirm.play_sounds.description",
         defaults.playSounds,
-        new Util.Mutable<>(config.playSounds),
+        () -> config.playSounds,
+        val -> config.playSounds = val,
         booleanOption -> new BooleanController(booleanOption, true)
       );
 
@@ -53,37 +56,39 @@ public final class DropConfirmConfig {
         "option.drop_confirm.confirmation_reset_delay",
         "option.drop_confirm.confirmation_reset_delay.description",
         defaults.confirmationResetDelay,
-        new Util.Mutable<>(config.confirmationResetDelay),
-        doubleOption -> new DoubleSliderController(doubleOption, 0.0, 10.0, 0.1)
+        () -> config.confirmationResetDelay,
+        val -> config.confirmationResetDelay = val,
+        doubleOption -> new DoubleSliderController(doubleOption, 1.0, 5.0, 0.05)
       );
 
       return builder
         .title(Text.translatable("config.drop_confirm.title"))
         .category(
           defaultCategoryBuilder
-            .options(List.<Option<?>>of(enabled, playSound, confirmationResetDelay))
+            .options(List.of(enabled, playSounds, confirmationResetDelay))
             .build()
         );
     })).generateScreen(parent);
   }
 
-  private static <T> Option<T> createOption(
-    String optionName,
-    String optionDescription,
+  public static <T> Option<T> createOption(
+    String name,
+    String description,
     T defaultValue,
-    Util.Mutable<T> configValue,
-    Function<Option<T>, Controller<T>> controllerProvider
+    Supplier<T> currentValue,
+    Consumer<T> newValue,
+    Function<Option<T>, Controller<T>> customController
   ) {
     return Option.<T>createBuilder()
-      .name(Text.translatable(optionName))
+      .name(Text.translatable(name))
       .description(
         OptionDescription.createBuilder()
-          .text(Text.translatable(optionDescription))
+          .text(Text.translatable(description))
           .build()
       )
-      .binding(defaultValue, configValue::getValue, configValue::setValue)
-      .customController(controllerProvider)
+      .binding(defaultValue, currentValue, newValue)
+      .customController(customController)
       .build();
   }
-
 }
+

@@ -4,10 +4,6 @@ build/
 out/
 classes/
 
-# Quilt Loom
-remappedSrc/
-run/
-
 # Eclipse
 *.launch
 
@@ -32,3 +28,12 @@ workspace/
 
 # macOS
 *.DS_Store
+
+# fabric
+run/
+
+# java
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
