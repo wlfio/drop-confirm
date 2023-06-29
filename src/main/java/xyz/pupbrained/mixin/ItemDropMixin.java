@@ -17,7 +17,6 @@ import xyz.pupbrained.config.DropConfirmConfig;
 
 import java.util.Objects;
 
-
 @Mixin(ClientPlayerEntity.class)
 public abstract class ItemDropMixin {
   @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
@@ -38,7 +37,10 @@ public abstract class ItemDropMixin {
     if (!Util.confirmed) {
       mc.inGameHud.setOverlayMessage(
         Text.of(
-          String.format("Press %s again to drop this item.",
+          String.format(
+            Text
+              .translatable("drop_confirm.confirmation")
+              .getString(),
             mc
               .options
               .dropKey
@@ -50,6 +52,7 @@ public abstract class ItemDropMixin {
       new Thread(() -> {
         try {
           Thread.sleep((long) (config.confirmationResetDelay * 1000));
+
           synchronized (Util.class) {
             Util.confirmed = false;
           }

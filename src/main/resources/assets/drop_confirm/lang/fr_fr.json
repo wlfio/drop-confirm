@@ -1,12 +1,13 @@
 {
-  "config.drop_confirm.enabled": "DropConfirm",
   "category.drop_confirm.general": "Général",
+  "category.drop_confirm.keybinds": "DropConfirm",
+  "config.drop_confirm.enabled": "DropConfirm",
+  "drop_confirm.confirmation": "Press %s again to drop this item.",
+  "key.drop_confirm.toggle": "Activer/désactiver DropConfirm",
+  "option.drop_confirm.confirmation_reset_delay": "Délai d'annulation du drop",
+  "option.drop_confirm.confirmation_reset_delay.description": "Le temps, en secondes, après quoi le drop est annulé.",
   "option.drop_confirm.enabled": "Activer DropConfirm",
   "option.drop_confirm.enabled.description": "Si DropConfirm devrait être activé.",
   "option.drop_confirm.play_sounds": "Jouer les effets audio",
-  "option.drop_confirm.play_sounds.description": "Si DropConfirm devrait jouer les effets audio de base.",
-  "option.drop_confirm.confirmation_reset_delay": "Délai d'annulation du drop",
-  "option.drop_confirm.confirmation_reset_delay.description": "Le temps, en secondes, après quoi le drop est annulé.",
-  "category.drop_confirm.keybinds": "DropConfirm",
-  "key.drop_confirm.toggle": "Activer/désactiver DropConfirm"
+  "option.drop_confirm.play_sounds.description": "Si DropConfirm devrait jouer les effets audio de base."
 }
