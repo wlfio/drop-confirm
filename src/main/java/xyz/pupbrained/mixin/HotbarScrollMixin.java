@@ -19,7 +19,7 @@ public abstract class HotbarScrollMixin {
     )
   )
   private void onHotbarScroll(CallbackInfo ci) {
-    if (!DropConfirmConfig.INSTANCE.getConfig().enabled)
+    if (!DropConfirmConfig.GSON.instance().enabled)
       return;
 
     Util.confirmed = false;

@@ -1,12 +1,12 @@
 package xyz.pupbrained.config;
 
 import dev.isxander.yacl3.api.*;
-import dev.isxander.yacl3.config.ConfigEntry;
-import dev.isxander.yacl3.config.ConfigInstance;
-import dev.isxander.yacl3.config.GsonConfigInstance;
+import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
+import dev.isxander.yacl3.config.v2.api.SerialEntry;
+import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.gui.controllers.BooleanController;
 import dev.isxander.yacl3.gui.controllers.slider.DoubleSliderController;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
@@ -16,21 +16,23 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class DropConfirmConfig {
-  public static final ConfigInstance<DropConfirmConfig> INSTANCE =
-    GsonConfigInstance
-      .createBuilder(DropConfirmConfig.class)
-      .setPath(FabricLoader.getInstance().getConfigDir().resolve("drop_confirm.json"))
-      .build();
+  public static final ConfigClassHandler<DropConfirmConfig> GSON = ConfigClassHandler.createBuilder(DropConfirmConfig.class)
+    .serializer(config -> GsonConfigSerializerBuilder.create(config)
+      .setPath(YACLPlatform.getConfigDir().resolve("drop_confirm.json"))
+      .build())
+    .build();
 
-  @ConfigEntry
+  @SerialEntry
   public boolean enabled = true;
-  @ConfigEntry
+
+  @SerialEntry
   public boolean playSounds = true;
-  @ConfigEntry
+
+  @SerialEntry
   public double confirmationResetDelay = 1.0;
 
   public static Screen createScreen(Screen parent) {
-    return YetAnotherConfigLib.create(INSTANCE, ((defaults, config, builder) -> {
+    return YetAnotherConfigLib.create(DropConfirmConfig.GSON, ((defaults, config, builder) -> {
       var defaultCategoryBuilder = ConfigCategory.createBuilder()
         .name(Text.translatable("category.drop_confirm.general"));
 
@@ -71,7 +73,7 @@ public final class DropConfirmConfig {
     })).generateScreen(parent);
   }
 
-  private static <T> Option<T> createOption(
+  private static <T> Option<T> createOption (
     String name,
     String description,
     T defaultValue,

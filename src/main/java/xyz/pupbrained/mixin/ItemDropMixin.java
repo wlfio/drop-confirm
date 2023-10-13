@@ -22,7 +22,7 @@ public abstract class ItemDropMixin {
   @Inject(method = "dropSelectedItem", at = @At("HEAD"), cancellable = true)
   private void onItemDrop(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
     final var mc = MinecraftClient.getInstance();
-    final var config = DropConfirmConfig.INSTANCE.getConfig();
+    final var config = DropConfirmConfig.GSON.instance();
     final var player = Objects.requireNonNull(mc.player);
 
     if (Util.isDisabled(config) || Util.isMainHandStackEmpty(player))
