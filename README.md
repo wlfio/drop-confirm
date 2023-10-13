@@ -6,7 +6,7 @@
 
 ---
 
-## What even *is* DropConfirm?
+## What *is* DropConfirm, exactly?
 
 DropConfirm is a **configurable quality-of-life mod** that adds a confirmation dialog when dropping items. I made it
 because I was tired of accidentally dropping my items to other players or into lava/voids.
@@ -16,7 +16,7 @@ this exact problem (and I assume others have too).
 
 ## Compatibility
 
-As of now, DropConfirm is only tested on 1.20.1 – but it *should* work on 1.20 too.
+As of now, DropConfirm supports versions from 1.20 to 1.20.2.
 
 Newer versions will likely be supported, and older versions may or may not work with slight modifications to the source.
 
