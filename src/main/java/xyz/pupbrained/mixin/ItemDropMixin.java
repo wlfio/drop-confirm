@@ -34,6 +34,9 @@ public abstract class ItemDropMixin {
     final var inventory = player.getInventory();
     var itemStack = inventory.getMainHandStack();
 
+    if (config.blacklistedItems.contains(itemStack.getItem()))
+      return;
+
     if (!Util.confirmed) {
       mc.inGameHud.setOverlayMessage(
         Text.of(
