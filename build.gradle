@@ -23,13 +23,13 @@ dependencies {
   modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
   modImplementation "org.quiltmc.parsers:gson:0.2.1"
 
-  modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.2.1+1.20") {
+  modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:3.1.1+1.19.4") {
     exclude(group: "org.quiltmc.parsers")
     exclude(group: "com.twelvemonkeys.common")
     exclude(group: "com.twelvemonkeys.imageio")
   }
 
-  modApi 'com.terraformersmc:modmenu:7.2.2'
+  modApi 'com.terraformersmc:modmenu:6.3.1'
 }
 
 processResources {

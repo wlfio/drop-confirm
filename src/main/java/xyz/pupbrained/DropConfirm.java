@@ -20,7 +20,7 @@ public class DropConfirm implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    DropConfirmConfig.GSON.load();
+    DropConfirmConfig.INSTANCE.load();
 
     var toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
       "key.drop_confirm.toggle",
@@ -31,12 +31,12 @@ public class DropConfirm implements ClientModInitializer {
     ClientTickEvents.END_CLIENT_TICK.register(client -> {
       while (toggleKey.wasPressed()) {
         var mc = MinecraftClient.getInstance();
-        var config = DropConfirmConfig.GSON.instance();
+        var config = DropConfirmConfig.INSTANCE.getConfig();
         var player = Objects.requireNonNull(mc.player);
 
         config.enabled = !config.enabled;
 
-        DropConfirmConfig.GSON.save();
+        DropConfirmConfig.INSTANCE.save();
 
         if (config.playSounds)
           player.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1.0f, config.enabled ? 1.0f : 0.5f);

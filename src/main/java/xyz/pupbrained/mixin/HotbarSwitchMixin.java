@@ -27,7 +27,7 @@ public abstract class HotbarSwitchMixin {
     locals = LocalCapture.CAPTURE_FAILHARD
   )
   private void onHotbarSwitch(CallbackInfo ci, int i) {
-    if (!DropConfirmConfig.GSON.instance().enabled)
+    if (!DropConfirmConfig.INSTANCE.getConfig().enabled)
       return;
 
     if (i != lastSlot) {
