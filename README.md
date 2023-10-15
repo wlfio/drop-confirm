@@ -16,7 +16,7 @@ this exact problem (and I assume others have too).
 
 ## Compatibility
 
-As of now, DropConfirm supports versions from 1.20 to 1.20.2.
+As of now, DropConfirm supports versions from 1.20 to 1.20.2 (with a less featureful backport for 1.19.4).
 
 Newer versions will likely be supported, and older versions may or may not work with slight modifications to the source.
 
@@ -25,8 +25,8 @@ Newer versions will likely be supported, and older versions may or may not work 
 - [x] Add configurations
 - [x] Add a command/keybind to toggle the mod
 - [x] Add sound events for toggling the mod and dropping items
+- [x] Add translations
 - [ ] Detect if the player is in a dangerous area (e.g. lava, void, etc.)
-- [ ] Add translations
 
 ## Configuration
 
