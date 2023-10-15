@@ -14,7 +14,7 @@
   },
   "license": "Unlicense",
   "icon": "assets/drop_confirm/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       {
