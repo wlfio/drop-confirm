@@ -5,9 +5,12 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.gui.controllers.BooleanController;
+import dev.isxander.yacl3.gui.controllers.dropdown.ItemController;
 import dev.isxander.yacl3.gui.controllers.slider.DoubleSliderController;
 import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -30,6 +33,9 @@ public final class DropConfirmConfig {
 
   @SerialEntry
   public double confirmationResetDelay = 1.0;
+
+  @SerialEntry
+  public List<Item> blacklistedItems = List.of();
 
   public static Screen createScreen(Screen parent) {
     return YetAnotherConfigLib.create(DropConfirmConfig.GSON, ((defaults, config, builder) -> {
@@ -63,11 +69,23 @@ public final class DropConfirmConfig {
         doubleOption -> new DoubleSliderController(doubleOption, 1.0, 5.0, 0.05)
       );
 
+      var blacklistedItems = createListOption(
+        "option.drop_confirm.blacklisted_items",
+        "option.drop_confirm.blacklisted_items.description",
+        defaults.blacklistedItems,
+        () -> config.blacklistedItems,
+        val -> config.blacklistedItems = val,
+        Items.AIR,
+        true,
+        ItemController::new
+      );
+
       return builder
         .title(Text.translatable("config.drop_confirm.title"))
         .category(
           defaultCategoryBuilder
             .options(List.of(enabled, playSounds, confirmationResetDelay))
+            .group(blacklistedItems)
             .build()
         );
     })).generateScreen(parent);
@@ -89,6 +107,30 @@ public final class DropConfirmConfig {
           .build()
       )
       .binding(defaultValue, currentValue, newValue)
+      .customController(customController)
+      .build();
+  }
+
+  private static <T> ListOption<T> createListOption (
+    String name,
+    String description,
+    List<T> defaultValue,
+    Supplier<List<T>> currentValue,
+    Consumer<List<T>> newValue,
+    T initialValue,
+    Boolean insertEntriesAtEnd,
+    Function<ListOptionEntry<T>, Controller<T>> customController
+  ) {
+    return ListOption.<T>createBuilder()
+      .name(Text.translatable(name))
+      .description(
+        OptionDescription.createBuilder()
+          .text(Text.translatable(description))
+          .build()
+      )
+      .binding(defaultValue, currentValue, newValue)
+      .initial(initialValue)
+      .insertEntriesAtEnd(insertEntriesAtEnd)
       .customController(customController)
       .build();
   }

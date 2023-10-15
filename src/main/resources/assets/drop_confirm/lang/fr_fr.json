@@ -11,5 +11,7 @@
   "option.drop_confirm.enabled": "Activer DropConfirm",
   "option.drop_confirm.enabled.description": "Si DropConfirm devrait être activé.",
   "option.drop_confirm.play_sounds": "Jouer les effets audio",
-  "option.drop_confirm.play_sounds.description": "Si DropConfirm devrait jouer les effets audio de base."
+  "option.drop_confirm.play_sounds.description": "Si DropConfirm devrait jouer les effets audio de base.",
+  "option.drop_confirm.blacklisted_items": "Items ignorés",
+  "option.drop_confirm.blacklisted_items.description": "Les items qui ne devraient pas être affectés par DropConfirm."
 }
