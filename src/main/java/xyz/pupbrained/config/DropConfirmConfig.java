@@ -32,6 +32,9 @@ public final class DropConfirmConfig {
   public boolean playSounds = true;
 
   @SerialEntry
+  public boolean treatAsWhitelist = false;
+
+  @SerialEntry
   public double confirmationResetDelay = 1.0;
 
   @SerialEntry
@@ -60,6 +63,15 @@ public final class DropConfirmConfig {
         booleanOption -> new BooleanController(booleanOption, true)
       );
 
+      var treatAsWhitelist = createOption(
+        "option.drop_confirm.treat_as_whitelist",
+        "option.drop_confirm.treat_as_whitelist.description",
+        defaults.treatAsWhitelist,
+        () -> config.treatAsWhitelist,
+        val -> config.treatAsWhitelist = val,
+        booleanOption -> new BooleanController(booleanOption, true)
+      );
+
       var confirmationResetDelay = createOption(
         "option.drop_confirm.confirmation_reset_delay",
         "option.drop_confirm.confirmation_reset_delay.description",
@@ -84,7 +96,7 @@ public final class DropConfirmConfig {
         .title(Text.translatable("config.drop_confirm.title"))
         .category(
           defaultCategoryBuilder
-            .options(List.of(enabled, playSounds, confirmationResetDelay))
+            .options(List.of(enabled, playSounds, confirmationResetDelay, treatAsWhitelist))
             .group(blacklistedItems)
             .build()
         );
