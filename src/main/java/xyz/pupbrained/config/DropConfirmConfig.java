@@ -81,9 +81,12 @@ public final class DropConfirmConfig {
         doubleOption -> new DoubleSliderController(doubleOption, 1.0, 5.0, 0.05)
       );
 
+      // FIXME: Figure out a way to update the strings instantly
+      //        Currently, the strings are only updated when the
+      //        config screen is reloaded.
       var blacklistedItems = createListOption(
-        "option.drop_confirm.blacklisted_items",
-        "option.drop_confirm.blacklisted_items.description",
+        config.treatAsWhitelist ? "option.drop_confirm.whitelisted_items" : "option.drop_confirm.blacklisted_items",
+        config.treatAsWhitelist ? "option.drop_confirm.whitelisted_items.description" : "option.drop_confirm.blacklisted_items.description",
         defaults.blacklistedItems,
         () -> config.blacklistedItems,
         val -> config.blacklistedItems = val,
